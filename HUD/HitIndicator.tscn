@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://HUD/SplatterIndicator.png" type="Texture" id=1]
+[ext_resource path="res://HUD/HitIndicator.gd" type="Script" id=2]
+
+[node name="BlobSplash" type="Sprite"]
+position = Vector2( 512, 300 )
+texture = ExtResource( 1 )
+script = ExtResource( 2 )

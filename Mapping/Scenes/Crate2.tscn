@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Mapping/Textures/Box1.png" type="Texture" id=1]
+
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.35, 0.35, 0.35 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -0.325823, 0, 0 )
+texture = ExtResource( 1 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.319443, 0, 0 )
+texture = ExtResource( 1 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.322018 )
+texture = ExtResource( 1 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.310142, 0 )
+texture = ExtResource( 1 )
+
+[node name="Sprite3D5" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0026378, 0, 0.319726 )
+texture = ExtResource( 1 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+shape = SubResource( 1 )

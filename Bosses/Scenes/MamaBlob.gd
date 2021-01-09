@@ -89,9 +89,9 @@ func _on_Area_body_entered(body: Node) -> void:
 		return
 	body.damage(DAMAGE)
 	body.slow_down()
+	
 	_reset_collision()
-	var _splash = load("res://BlobSplash.tscn").instance()
-	body.add_child(_splash)
+	body.add_child(Globals.hit_indicators[0].instance())
 
 
 func _on_JumpTimer_timeout() -> void:

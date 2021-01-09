@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 	$RoomLock4/CollisionShape.disabled = true
 	_room_finished = true
 	
-	var _potion = load("res://Potion.tscn").instance()
+	var _potion = Globals.potions[randi() % Globals.potions.size()].instance()
 	add_child(_potion)
 
 

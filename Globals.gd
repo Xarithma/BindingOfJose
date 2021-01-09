@@ -17,13 +17,22 @@ onready var reset_key_amount: float = player_key_amount
 
 onready var player = get_tree().get_nodes_in_group("Player")[0]
 
+# Preload scenes, so it gives a little better performance.
 var monsters: Array = []
 var potions: Array = []
 
+# If I were to add more projectiles, I'll make a folder for it to load.
+var projectile := preload("res://Enemies/Utils/Projectile.tscn")
+
+# Since there are a lot of damage indicator calls, it's better to load once.
+var hit_indicators: Array = []
+
+
 # Global scene loading for better performance.
 func _ready() -> void:
-	_load_scenes("res://Potions/", potions) # Load potions
+	_load_scenes("res://Potions/Scenes/", potions) # Load potions
 	_load_scenes("res://Enemies/Scenes/", monsters) # Load monsters
+	_load_scenes("res://HUD/Scenes/", hit_indicators) # Load dmg indicators
 
 
 func _process(_delta: float):

@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Bosses/Scenes/MamaBlob.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Bosses/BossRoom.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Bosses/Minions/BlobSpawner.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Bosses/BossBattle.gd" type="Script" id=5]
+[ext_resource path="res://Fonts/Early GameBoy.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="Theme" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 0.67451, 0.741176, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.396078, 0.156863, 0.278431, 1 )
+
+[sub_resource type="DynamicFont" id=4]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 32
+font_data = ExtResource( 6 )
+
+[node name="BossRoom" instance=ExtResource( 3 )]
+script = ExtResource( 5 )
+
+[node name="MamaBlob" parent="." index="0" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.5, 0 )
+
+[node name="Player" parent="." index="1" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 25 )
+
+[node name="Wall" parent="." index="3" groups=[
+"Wall",
+]]
+
+[node name="Wall2" parent="." index="4" groups=[
+"Wall",
+]]
+
+[node name="Wall3" parent="." index="5" groups=[
+"Wall",
+]]
+
+[node name="Wall4" parent="." index="6" groups=[
+"Wall",
+]]
+
+[node name="BlobSpawner" parent="." index="8" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5, -9 )
+
+[node name="BlobSpawner3" parent="." index="9" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 1.5, 1 )
+
+[node name="BlobSpawner4" parent="." index="10" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 11 )
+
+[node name="ProgressBar" type="ProgressBar" parent="." index="11"]
+margin_left = 56.0
+margin_top = 511.0
+margin_right = 487.0
+margin_bottom = 531.0
+theme = SubResource( 1 )
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+max_value = 50.0
+value = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="." index="12"]
+margin_left = 115.515
+margin_top = 460.142
+margin_right = 451.515
+margin_bottom = 500.142
+custom_fonts/font = SubResource( 5 )
+text = "Boss health"
+__meta__ = {
+"_edit_use_anchors_": false
+}
