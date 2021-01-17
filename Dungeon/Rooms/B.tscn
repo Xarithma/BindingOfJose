@@ -5,7 +5,6 @@
 [ext_resource path="res://Mapping/Scenes/Ceiling.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Mapping/Scenes/Wall.tscn" type="PackedScene" id=4]
 
-
 [node name="B" type="Spatial"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
 

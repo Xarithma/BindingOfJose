@@ -44,7 +44,7 @@ func _load_scenes(_path: String, _arr: Array) -> void:
 	var _dir: Directory = Directory.new()
 	var _open := _dir.open(_path)
 	var _list := _dir.list_dir_begin()
-	
+
 	while true:
 		var _file: String = _dir.get_next()
 		if _file == "":
@@ -53,3 +53,4 @@ func _load_scenes(_path: String, _arr: Array) -> void:
 			if ".tscn" in _file:
 				_arr.append(load(_path + _file))
 	_dir.list_dir_end()
+

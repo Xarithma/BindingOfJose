@@ -7,8 +7,6 @@
 [ext_resource path="res://Player/Fist1.png" type="Texture" id=5]
 [ext_resource path="res://Player/Fist2.png" type="Texture" id=6]
 
-
-
 [sub_resource type="CapsuleMesh" id=1]
 mid_height = 3.0
 

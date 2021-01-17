@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Mapping/Scenes/Crate.tscn" type="PackedScene" id=1]
+
+[node name="BunchOfCrates" type="Spatial"]
+
+[node name="Crate" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.99358, 0, 0.113134, 0, 1, 0, -0.113134, 0, 0.99358, 0, 0, 0.0906737 )
+
+[node name="Crate2" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.803587, 0, -0.595187, 0, 1, 0, 0.595187, 0, 0.803587, 0, 0, 2.82508 )

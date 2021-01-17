@@ -11,8 +11,6 @@ var _in_rush: bool = false
 
 const _speed: int = 24
 
-onready var _player
-
 
 func _ready() -> void:
 	yield(get_tree().create_timer(3), "timeout")
@@ -29,12 +27,15 @@ func _physics_process(delta: float) -> void:
 	# I mean, why should it run when she be stunned, right?
 	if _stunned:
 		return
-	
+
+	if not Globals.player:
+		return
+
 	# I hate writing global_transform.origin. I just did it again.
 	var _origin = global_transform.origin
 	var _target: Vector3 = Globals.player.global_transform.origin
 	_target.y = 1 # Fixing the height of the pathfinding.
-	
+
 	# I know there is a better way, pls no buli
 	match _phase:
 		1:
@@ -52,14 +53,12 @@ func _physics_process(delta: float) -> void:
 
 			if not $AnimationPlayer.is_playing():
 				return
-			_origin = _origin.move_toward(_target, delta * _speed)
-			global_transform.origin = _origin
 		2:
-			if not Globals.player:
+			if not _in_rush:
 				return
-			if _in_rush:
-				var _direction: Vector3 = _origin.direction_to(_target)
-				var _move := move_and_slide(_direction * _speed, Vector3.UP)
+
+		_origin = _origin.move_toward(_target, delta * _speed)
+		global_transform.origin = _origin
 
 
 func damage():
@@ -89,7 +88,7 @@ func _on_Area_body_entered(body: Node) -> void:
 		return
 	body.damage(DAMAGE)
 	body.slow_down()
-	
+
 	_reset_collision()
 	body.add_child(Globals.hit_indicators[0].instance())
 

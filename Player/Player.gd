@@ -31,10 +31,11 @@ func _input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("ui_select"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		
+
 	if event.is_action_pressed("shoot"):
 		_in_punch = true
 		$Head/Camera/Fist.play("punch")
+		$Head/Camera/Fist.speed_scale = Globals.player_attack_speed
 
 
 func _physics_process(delta: float) -> void:
@@ -67,8 +68,8 @@ func _process(_delta: float) -> void:
 func damage(amount: int) -> void:
 	Globals.player_health -= amount
 	if Globals.player_health <= 0:
-		var _death_camera = load("res://DeathCamera.tscn").instance()
-		get_parent().add_child(_death_camera)
+		var _death_camera = load("res://Enemies/Utils/DeathCamera.tscn")
+		get_parent().add_child(_death_camera.instance())
 		_death_camera.global_transform.origin = global_transform.origin
 		queue_free()
 
@@ -88,3 +89,4 @@ func _on_Fist_animation_finished() -> void:
 func _on_HitBox_body_entered(body: Node) -> void:
 	if body.is_in_group("Enemy"):
 		body.damage()
+

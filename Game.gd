@@ -14,7 +14,7 @@ func _ready() -> void:
 	var _path: String = "res://Dungeon/Rooms/"
 	var _open := _dir.open(_path)
 	var _list := _dir.list_dir_begin()
-	
+
 	while true:
 		var _file: String = _dir.get_next()
 		if _file == "":
@@ -44,3 +44,4 @@ func _on_PortalTimer_timeout() -> void:
 	_portal.global_transform.origin = rooms.back()
 	_portal.global_transform.origin.y = 5
 	print("Portal spawned")
+

@@ -3,7 +3,6 @@
 [ext_resource path="res://Mapping/Textures/Applesprop1.png" type="Texture" id=1]
 [ext_resource path="res://Mapping/Textures/Box1.png" type="Texture" id=2]
 
-
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 1, 1 )
 
