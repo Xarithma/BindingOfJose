@@ -1,6 +1,5 @@
 extends Node
 
-
 var rooms: Array = [Vector3.ZERO]
 
 var top_rooms: Array = []
@@ -19,7 +18,7 @@ func _ready() -> void:
 		var _file: String = _dir.get_next()
 		if _file == "":
 			break
-		elif !_file.begins_with("."):
+		elif not _file.begins_with("."):
 			if "F" in _file:
 				top_rooms.append(_path + _file)
 			if "B" in _file:
@@ -44,4 +43,3 @@ func _on_PortalTimer_timeout() -> void:
 	_portal.global_transform.origin = rooms.back()
 	_portal.global_transform.origin.y = 5
 	print("Portal spawned")
-

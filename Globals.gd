@@ -1,6 +1,5 @@
 extends Node
 
-
 var player_movement_speed: float = 20
 var player_attack_speed: float = 1
 var player_attack_damage: float = 1
@@ -21,7 +20,7 @@ onready var player = get_tree().get_nodes_in_group("Player")[0]
 var monsters: Array = []
 var potions: Array = []
 
-# If I were to add more projectiles, I'll make a folder for it to load.
+#  If I were to add more projectiles, I'll make a folder for it to load.
 var projectile := preload("res://Enemies/Utils/Projectile.tscn")
 
 # Since there are a lot of damage indicator calls, it's better to load once.
@@ -30,9 +29,9 @@ var hit_indicators: Array = []
 
 # Global scene loading for better performance.
 func _ready() -> void:
-	_load_scenes("res://Potions/Scenes/", potions) # Load potions
-	_load_scenes("res://Enemies/Scenes/", monsters) # Load monsters
-	_load_scenes("res://HUD/Scenes/", hit_indicators) # Load dmg indicators
+	_load_scenes("res://Potions/Scenes/", potions)  # Load potions
+	_load_scenes("res://Enemies/Scenes/", monsters)  # Load monsters
+	_load_scenes("res://HUD/Scenes/", hit_indicators)  # Load dmg indicators
 
 
 func _process(_delta: float):
@@ -49,8 +48,7 @@ func _load_scenes(_path: String, _arr: Array) -> void:
 		var _file: String = _dir.get_next()
 		if _file == "":
 			break
-		elif !_file.begins_with("."):
+		elif ! _file.begins_with("."):
 			if ".tscn" in _file:
 				_arr.append(load(_path + _file))
 	_dir.list_dir_end()
-

@@ -1,15 +1,15 @@
 extends KinematicBody
 
 
-const DAMAGE: int = 24
-const LIMIT: int = 35
-var spawn_blub_amount: int = 0
-var health: float = 50
+const _DAMAGE: int = 24
+
+var _health: float = 50
 var _phase: int = 1
 var _stunned: bool = false
 var _in_rush: bool = false
 
-const _speed: int = 24
+const _MOVEMENT_BORDER: int = 35
+const _SPEED: int = 24
 
 
 func _ready() -> void:
@@ -39,16 +39,13 @@ func _physics_process(delta: float) -> void:
 	# I know there is a better way, pls no buli
 	match _phase:
 		1:
-			# I know, this looks disgusting, but this is the best way
-			# to keep Mama Blob in the ring. I'll have to figure out
-			# something more sophisticated.
-			if _origin.x > LIMIT:
+			if _origin.x > _MOVEMENT_BORDER:
 				_origin.x -= 1
-			elif _origin.x < -LIMIT:
+			elif _origin.x < -_MOVEMENT_BORDER:
 				_origin.x += 1
-			if _origin.z > LIMIT:
+			if _origin.z > _MOVEMENT_BORDER:
 				_origin.z -= 1
-			elif _origin.z < -LIMIT:
+			elif _origin.z < -_MOVEMENT_BORDER:
 				_origin.z += 1
 
 			if not $AnimationPlayer.is_playing():
@@ -57,13 +54,13 @@ func _physics_process(delta: float) -> void:
 			if not _in_rush:
 				return
 
-		_origin = _origin.move_toward(_target, delta * _speed)
+		_origin = _origin.move_toward(_target, delta * _SPEED)
 		global_transform.origin = _origin
 
 
 func damage():
-	health -= Globals.player_attack_damage
-	if health <= 0:
+	_health -= Globals.player_attack_damage
+	if _health <= 0:
 		queue_free()
 
 
@@ -86,7 +83,7 @@ func _on_Area_body_entered(body: Node) -> void:
 		_reset_collision(1)
 	if not body.is_in_group("Player"):
 		return
-	body.damage(DAMAGE)
+	body.damage(_DAMAGE)
 	body.slow_down()
 
 	_reset_collision()
