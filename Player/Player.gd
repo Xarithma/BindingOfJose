@@ -1,6 +1,5 @@
 extends KinematicBody
 
-
 var _acceleration: int = 6
 var _current_speed: float = Globals.player_movement_speed
 
@@ -62,14 +61,14 @@ func _physics_process(delta: float) -> void:
 
 func _process(_delta: float) -> void:
 	$Head/Camera/Debug.set_text("Health: %d" % Globals.player_health)
-	$Head/HitBox/CollisionShape.disabled = !_in_punch
+	$Head/HitBox/CollisionShape.disabled = ! _in_punch
 
 
 func damage(amount: int) -> void:
 	Globals.player_health -= amount
 	if Globals.player_health <= 0:
-		var _death_camera = load("res://Enemies/Utils/DeathCamera.tscn")
-		get_parent().add_child(_death_camera.instance())
+		var _death_camera = load("res://Enemies/Utils/DeathCamera.tscn").instance()
+		get_parent().add_child(_death_camera)
 		_death_camera.global_transform.origin = global_transform.origin
 		queue_free()
 
@@ -89,4 +88,3 @@ func _on_Fist_animation_finished() -> void:
 func _on_HitBox_body_entered(body: Node) -> void:
 	if body.is_in_group("Enemy"):
 		body.damage()
-

@@ -1,12 +1,13 @@
 extends KinematicBody
 
+const _DAMAGE: int = 18
 
-const _DAMAGE: int = 24
-
-var _health: float = 50
+var health: float = 50
 var _phase: int = 1
 var _stunned: bool = false
 var _in_rush: bool = false
+var _can_damage: bool = true
+var _target: Vector3 = Vector3.ZERO
 
 const _MOVEMENT_BORDER: int = 35
 const _SPEED: int = 24
@@ -19,7 +20,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if get_tree().get_nodes_in_group("Blub").size() == 0:
-		_phase = 2
+		_phase += 1
 		set_process(false)
 
 
@@ -33,8 +34,6 @@ func _physics_process(delta: float) -> void:
 
 	# I hate writing global_transform.origin. I just did it again.
 	var _origin = global_transform.origin
-	var _target: Vector3 = Globals.player.global_transform.origin
-	_target.y = 1 # Fixing the height of the pathfinding.
 
 	# I know there is a better way, pls no buli
 	match _phase:
@@ -49,19 +48,40 @@ func _physics_process(delta: float) -> void:
 				_origin.z += 1
 
 			if not $AnimationPlayer.is_playing():
-				return
-		2:
-			if not _in_rush:
+				_can_damage = false
+				$CollisionShape.disabled = false
+
+				# Get the target position, while not jumping.
+				_target = _get_target_pos()
 				return
 
-		_origin = _origin.move_toward(_target, delta * _SPEED)
-		global_transform.origin = _origin
+			_can_damage = true
+			$CollisionShape.disabled = true
+
+		2:
+			if not _in_rush:
+				_can_damage = false
+				return
+
+			# Get target position while rushing.
+			_target = _get_target_pos()
+			_can_damage = true
+
+	_origin = _origin.move_toward(_target, _SPEED * delta)
+	global_transform.origin = _origin
 
 
 func damage():
-	_health -= Globals.player_attack_damage
-	if _health <= 0:
+	health -= Globals.player_attack_damage
+	if health <= 0:
 		queue_free()
+
+
+func _get_target_pos() -> Vector3:
+	# Target position = player position.
+	var _vec: Vector3 = Globals.player.global_transform.origin
+	_vec.y = 1  # Fix the height of the target.
+	return _vec
 
 
 func _reset_collision(_timer: int = 2):
@@ -69,18 +89,19 @@ func _reset_collision(_timer: int = 2):
 	$CollisionTimer.start(_timer)
 
 
-func _get_rush_direction(_target):
-	return global_transform.origin.direction_to(_target)
-
-
 func _on_Area_body_entered(body: Node) -> void:
 	if _stunned:
 		return
+
+	if not _can_damage:
+		return
+
 	if _phase == 2 and body.is_in_group("Wall"):
 		_stunned = true
 		print("Mama Blob is now stunned!")
 		$StunTimer.start(5)
 		_reset_collision(1)
+
 	if not body.is_in_group("Player"):
 		return
 	body.damage(_DAMAGE)
@@ -97,12 +118,11 @@ func _on_JumpTimer_timeout() -> void:
 
 func _on_AnimationPlayer_animation_finished(_anim_name: String) -> void:
 	$AnimationPlayer.stop()
-	$JumpTimer.start(3)
+	$JumpTimer.start(1)
 
 
 func _on_StunTimer_timeout():
 	_stunned = false
-	print("Mama Blob is unstunned!")
 
 
 func _on_CollisionTimer_timeout():

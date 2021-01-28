@@ -1,6 +1,5 @@
 extends MeshInstance
 
-
 export var _text: Array = ["Paper Text Here!"]
 
 

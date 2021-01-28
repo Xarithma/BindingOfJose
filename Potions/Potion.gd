@@ -42,4 +42,7 @@ func _on_HitBox_body_entered(body: Node) -> void:
 				return
 			Globals.player_health *= _health
 
+	var _dialogue = load("res://Converstaions/Potion.tscn").instance()
+	get_parent().add_child(_dialogue)
+	_dialogue.play_dialogue()
 	queue_free()

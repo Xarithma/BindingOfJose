@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://HUD/Scenes/DialogueProp.tscn" type="PackedScene" id=1]
+
+[node name="DialogueLabel" instance=ExtResource( 1 )]
+dialogue = [ "You picked up a potion." ]
+letter_speed = 0.05

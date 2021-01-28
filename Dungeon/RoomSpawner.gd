@@ -14,20 +14,20 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	var _rooms : Array
+	var _rooms: Array
 	var _random: int
-	
+
 	match _opening_direction:
-		1: # Spawn top room
+		1:  # Spawn top room
 			_rooms = get_tree().get_current_scene().top_rooms
 			_random = randi() % _rooms.size()
-		2: # Spawn bot room
+		2:  # Spawn bot room
 			_rooms = get_tree().get_current_scene().bot_rooms
 			_random = randi() % _rooms.size()
-		3: # Spawn left room
+		3:  # Spawn left room
 			_rooms = get_tree().get_current_scene().left_rooms
 			_random = randi() % _rooms.size()
-		4: # Spawn right room
+		4:  # Spawn right room
 			_rooms = get_tree().get_current_scene().right_rooms
 			_random = randi() % _rooms.size()
 	add_child(load(_rooms[_random]).instance())

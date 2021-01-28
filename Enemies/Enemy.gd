@@ -7,19 +7,15 @@ extends KinematicBody
 # I made several days ago, on a coffein overload, and just expect
 # people to understand even mumbling about this.
 
-enum ENEMY_TYPE {
-	NONE,
-	BLOB,
-	TURRET
-}
+enum ENEMY_TYPE { NONE, BLOB, TURRET }
 
-export(ENEMY_TYPE) var _type = ENEMY_TYPE.BLOB
+export (ENEMY_TYPE) var _type = ENEMY_TYPE.BLOB
 export var _health: float = 5
 export var _height: float = 3
 export var _attack_speed: float = 0.5
 
 # Path finding
-var _path: Array  = []
+var _path: Array = []
 var _path_node: int = 0
 
 export var _speed: int = 7
@@ -45,10 +41,10 @@ func _physics_process(delta: float) -> void:
 		return
 
 	global_transform.origin.y = _height
-	
+
 	var _target: Vector3 = Globals.player.global_transform.origin
 	_target.y = 10
-	
+
 	if _in_knockback:
 		var _move := _do_knockback(_target, delta)
 	else:
@@ -95,7 +91,7 @@ func _on_AttackCooldown_timeout() -> void:
 		var _origin: Vector3 = global_transform.origin
 		_projectile_instance.global_transform.origin = _origin
 		return
-	
+
 	$Area/CollisionShape.disabled = false
 
 
@@ -112,7 +108,7 @@ func _on_BlobTimer_timeout() -> void:
 
 func _spawn_hit_indicator():
 	var _indicator
-	
+
 	if _type == ENEMY_TYPE.BLOB:
 		_indicator = Globals.hit_indicators[0].instance()
 	else:
@@ -123,16 +119,16 @@ func _spawn_hit_indicator():
 func _on_Area_body_entered(body: Node) -> void:
 	if _type == ENEMY_TYPE.TURRET:
 		return
-	
+
 	if not body.is_in_group("Player"):
 		return
 
 	if $Area/CollisionShape.disabled:
 		return
-	
+
 	$Area/CollisionShape.disabled = true
 	$AttackCooldown.start(_attack_speed)
-	
+
 	body.damage(_damage)
 	_spawn_hit_indicator()
 

@@ -6,7 +6,6 @@
 _speed = 0.0
 _attack_speed = 0.0
 _health = 0.0
-_max_health = 5.0
 _damage = 0.0
 
 [node name="Liquid" parent="Bottle" index="0"]

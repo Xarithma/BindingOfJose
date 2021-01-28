@@ -21,7 +21,7 @@ var monsters: Array = []
 var potions: Array = []
 
 #  If I were to add more projectiles, I'll make a folder for it to load.
-var projectile := preload("res://Enemies/Utils/Projectile.tscn")
+const projectile := preload("res://Enemies/Utils/Projectile.tscn")
 
 # Since there are a lot of damage indicator calls, it's better to load once.
 var hit_indicators: Array = []
@@ -37,6 +37,7 @@ func _ready() -> void:
 func _process(_delta: float):
 	for entity in get_tree().get_nodes_in_group("Player"):
 		player = entity
+	player.global_transform.origin.y = 3
 
 
 func _load_scenes(_path: String, _arr: Array) -> void:

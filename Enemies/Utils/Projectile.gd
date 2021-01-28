@@ -1,6 +1,5 @@
 extends KinematicBody
 
-
 onready var _target: Vector3 = Globals.player.global_transform.origin
 const DAMAGE: int = 20
 const MIN_DAMAGE: int = 3
@@ -26,4 +25,3 @@ func _physics_process(delta: float) -> void:
 		if _damage > MIN_DAMAGE and Globals.player:
 			Globals.player.damage(DAMAGE / _distance)
 		queue_free()
-
