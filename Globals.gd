@@ -23,12 +23,15 @@ var potions: Array = []
 #  If I were to add more projectiles, I'll make a folder for it to load.
 const projectile := preload("res://Enemies/Utils/Projectile.tscn")
 
+# Load the boss portal to the scene.
+const portal := preload("res://Dungeon/BossPortal.tscn")
+
 # Since there are a lot of damage indicator calls, it's better to load once.
 var hit_indicators: Array = []
 
 
 # Global scene loading for better performance.
-func _ready() -> void:
+func _init() -> void:
 	_load_scenes("res://Potions/Scenes/", potions)  # Load potions
 	_load_scenes("res://Enemies/Scenes/", monsters)  # Load monsters
 	_load_scenes("res://HUD/Scenes/", hit_indicators)  # Load dmg indicators

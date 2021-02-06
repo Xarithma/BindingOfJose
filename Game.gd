@@ -8,6 +8,7 @@ var left_rooms: Array = []
 var right_rooms: Array = []
 
 
+# Generates strings of the room paths.
 func _ready() -> void:
 	var _dir: Directory = Directory.new()
 	var _path: String = "res://Dungeon/Rooms/"
@@ -30,6 +31,7 @@ func _ready() -> void:
 	_dir.list_dir_end()
 
 
+# Fade in to the scene.
 func _physics_process(delta: float) -> void:
 	$FadeIn.color.a = lerp($FadeIn.color.a, 0, delta)
 	if $FadeIn.color.a < 0.01:
@@ -37,9 +39,16 @@ func _physics_process(delta: float) -> void:
 		set_physics_process(false)
 
 
+# Spawn the portal after the generation timeout.
 func _on_PortalTimer_timeout() -> void:
-	var _portal = load("res://Dungeon/BossPortal.tscn").instance()
-	add_child(_portal)
-	_portal.global_transform.origin = rooms.back()
-	_portal.global_transform.origin.y = 5
-	print("Portal spawned")
+	# Instance of the boss portal.
+	var _portal_instance = Globals.portal.instance()
+
+	# Add the portal scene to the game scene.
+	add_child(_portal_instance)
+
+	# Set the portal's position to the last room.
+	_portal_instance.global_transform.origin = rooms.back()
+
+	# ! Remove this on release.
+	print("Portal spawned at " + str(_portal_instance.global_transform.origin))
