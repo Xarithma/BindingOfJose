@@ -7,10 +7,11 @@ var _phase: int = 1
 var _stunned: bool = false
 var _in_rush: bool = false
 var _can_damage: bool = true
-var _target: Vector3 = Vector3.ZERO
 
 const _MOVEMENT_BORDER: int = 35
-const _SPEED: int = 24
+const _SPEED: int = 19
+
+var _target: Vector3 = Vector3.ZERO
 
 
 func _ready() -> void:
@@ -24,7 +25,7 @@ func _process(_delta: float) -> void:
 		set_process(false)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# I mean, why should it run when she be stunned, right?
 	if _stunned:
 		return
@@ -52,7 +53,7 @@ func _physics_process(delta: float) -> void:
 				$CollisionShape.disabled = false
 
 				# Get the target position, while not jumping.
-				_target = _get_target_pos()
+				_target = _get_direction_to_target()
 				return
 
 			_can_damage = true
@@ -64,11 +65,13 @@ func _physics_process(delta: float) -> void:
 				return
 
 			# Get target position while rushing.
-			_target = _get_target_pos()
+			_target = _get_direction_to_target()
 			_can_damage = true
 
-	_origin = _origin.move_toward(_target, _SPEED * delta)
-	global_transform.origin = _origin
+
+	var _move: Vector3 = move_and_slide(_get_velocity(), Vector3.UP)
+	# _origin = _origin.move_toward(_target, _SPEED * delta)
+	# global_transform.origin = _origin
 
 
 func damage():
@@ -77,11 +80,19 @@ func damage():
 		queue_free()
 
 
-func _get_target_pos() -> Vector3:
+func _get_player_pos() -> Vector3:
 	# Target position = player position.
-	var _vec: Vector3 = Globals.player.global_transform.origin
-	_vec.y = 1  # Fix the height of the target.
-	return _vec
+	var orig: Vector3 = Globals.player.global_transform.origin
+	orig.y = 1  # Fix the height of the target.
+	return orig
+
+
+func _get_direction_to_target() -> Vector3:
+	return global_transform.origin.direction_to(_get_player_pos())
+
+
+func _get_velocity(delta: float = 1) -> Vector3:
+	return _get_direction_to_target() * delta
 
 
 func _reset_collision(_timer: int = 2):
@@ -131,3 +142,8 @@ func _on_CollisionTimer_timeout():
 
 func _on_RushTimer_timeout() -> void:
 	_in_rush = not _in_rush
+
+	if not _in_rush and _phase == 2:
+		$AnimatedSprite3D.animation = "tired"
+	elif _in_rush and _phase == 2:
+		$AnimatedSprite3D.animation = "default"

@@ -3,7 +3,7 @@
 [ext_resource path="res://Bosses/Graphics/blub1.png" type="Texture" id=1]
 [ext_resource path="res://Bosses/Graphics/blub2.png" type="Texture" id=2]
 [ext_resource path="res://Bosses/Graphics/blub3.png" type="Texture" id=3]
-[ext_resource path="res://Bosses/Minions/BlobSpawner.gd" type="Script" id=4]
+[ext_resource path="res://Bosses/Objectives/BlobSpawner.gd" type="Script" id=4]
 [ext_resource path="res://Bosses/Graphics/blubhsoot6.png" type="Texture" id=5]
 [ext_resource path="res://Bosses/Graphics/blubhsoot7.png" type="Texture" id=6]
 [ext_resource path="res://Bosses/Graphics/blubhsoot11.png" type="Texture" id=7]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Bosses/Graphics/blubhsoot1.png" type="Texture" id=13]
 [ext_resource path="res://Bosses/Graphics/blubhsoot2.png" type="Texture" id=14]
 [ext_resource path="res://Bosses/Graphics/blubhsoot3.png" type="Texture" id=15]
+
 
 
 
