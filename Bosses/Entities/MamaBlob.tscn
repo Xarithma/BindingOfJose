@@ -67,7 +67,7 @@ shape = SubResource( 1 )
 transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 7.5, 0 )
 billboard = 1
 frames = SubResource( 2 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Area" type="Area" parent="AnimatedSprite3D"]
