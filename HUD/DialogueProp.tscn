@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://HUD/DialogueProp.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/Early GameBoy.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 24
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[node name="DialogueLabel" type="Label"]
+anchor_left = 0.2
+anchor_top = 0.6
+anchor_right = 0.8
+anchor_bottom = 0.9
+custom_fonts/font = SubResource( 1 )
+align = 1
+autowrap = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NextDialogueCooldown" type="Timer" parent="."]
+[connection signal="timeout" from="NextDialogueCooldown" to="." method="_on_NextDialogueCooldown_timeout"]

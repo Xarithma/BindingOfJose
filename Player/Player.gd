@@ -22,8 +22,8 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotate_y(deg2rad(-event.relative.x * _mouse_sensitivity))
-		$Head.rotate_x(deg2rad(-event.relative.y * _mouse_sensitivity))
-		$Head.rotation.x = clamp($Head.rotation.x, deg2rad(-89), deg2rad(89))
+		#$Head.rotate_x(deg2rad(-event.relative.y * _mouse_sensitivity))
+		#$Head.rotation.x = clamp($Head.rotation.x, deg2rad(-89), deg2rad(89))
 
 	if event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -88,3 +88,9 @@ func _on_Fist_animation_finished() -> void:
 func _on_HitBox_body_entered(body: Node) -> void:
 	if body.is_in_group("Enemy"):
 		body.damage()
+
+
+func _on_HitBox_area_entered(area: Area) -> void:
+	if area.is_in_group("BossHitbox"):
+		for boss in get_tree().get_nodes_in_group("Boss"):
+			boss.damage()

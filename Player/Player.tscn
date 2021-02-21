@@ -51,6 +51,7 @@ shape = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0 )
 
 [node name="Camera" type="Camera" parent="Head"]
+fov = 90.0
 
 [node name="Debug" type="Label" parent="Head/Camera"]
 margin_left = 15.0
@@ -97,4 +98,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
 enabled = true
 cast_to = Vector3( 0, -1.5, 0 )
 [connection signal="animation_finished" from="Head/Camera/Fist" to="." method="_on_Fist_animation_finished"]
+[connection signal="area_entered" from="Head/HitBox" to="." method="_on_HitBox_area_entered"]
 [connection signal="body_entered" from="Head/HitBox" to="." method="_on_HitBox_body_entered"]
