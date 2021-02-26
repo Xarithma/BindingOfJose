@@ -29,7 +29,7 @@ var _target: Vector3 = Vector3.ZERO
 
 
 # Calls when node gets initialized.
-func _init() -> void:
+func _ready() -> void:
 	yield(get_tree().create_timer(3), "timeout")
 	$AnimationPlayer.play("Jumping")
 
