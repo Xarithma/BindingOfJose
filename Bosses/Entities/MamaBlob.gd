@@ -112,6 +112,7 @@ func _limit_boundaries() -> Vector3:
 # This is a public funtion, and upon call the damage of the player is dealt.
 func damage():
 	health -= Globals.player_attack_damage
+	$UI/HealthBar.value = health
 	if health <= 0:
 		queue_free()
 

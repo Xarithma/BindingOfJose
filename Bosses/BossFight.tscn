@@ -1,31 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Bosses/Entities/MamaBlob.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Bosses/DefaultBossMap.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Bosses/Objectives/BlobSpawner.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Bosses/BossFight.gd" type="Script" id=5]
-[ext_resource path="res://Fonts/Early GameBoy.ttf" type="DynamicFontData" id=6]
-
-[sub_resource type="Theme" id=1]
-
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 1, 0.67451, 0.741176, 1 )
-
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.396078, 0.156863, 0.278431, 1 )
-
-[sub_resource type="DynamicFont" id=4]
-outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 6 )
-
-[sub_resource type="DynamicFont" id=5]
-size = 32
-font_data = ExtResource( 6 )
 
 [node name="BossFight" type="Spatial"]
-script = ExtResource( 5 )
 
 [node name="Mapping" type="Node" parent="."]
 
@@ -47,31 +27,3 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 1.5, 1 )
 
 [node name="BlobSpawner4" parent="Essentials" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 11 )
-
-[node name="UserInterface" type="Node" parent="."]
-
-[node name="ProgressBar" type="ProgressBar" parent="UserInterface"]
-margin_left = 56.0
-margin_top = 511.0
-margin_right = 487.0
-margin_bottom = 531.0
-theme = SubResource( 1 )
-custom_styles/fg = SubResource( 2 )
-custom_styles/bg = SubResource( 3 )
-custom_fonts/font = SubResource( 4 )
-max_value = 25.0
-value = 20.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="UserInterface"]
-margin_left = 115.515
-margin_top = 460.142
-margin_right = 451.515
-margin_bottom = 500.142
-custom_fonts/font = SubResource( 5 )
-text = "Boss health"
-__meta__ = {
-"_edit_use_anchors_": false
-}
