@@ -14,11 +14,16 @@ onready var reset_attack_speed: float = player_attack_speed
 onready var reset_attack_damage: float = player_attack_damage
 onready var reset_key_amount: float = player_key_amount
 
-onready var player = get_tree().get_nodes_in_group("Player")[0]
+onready var player
 
 # Preload scenes, so it gives a little better performance.
 var monsters: Array = []
 var potions: Array = []
+
+# This determines the map loading logic.
+var game_dungeon_index: int = 0
+var game_dungeon_amount: int = 1
+var game_map_to_load: String = "res://Game.tscn"
 
 #  If I were to add more projectiles, I'll make a folder for it to load.
 const projectile := preload("res://Enemies/Utils/Projectile.tscn")
@@ -40,7 +45,7 @@ func _init() -> void:
 func _process(_delta: float):
 	for entity in get_tree().get_nodes_in_group("Player"):
 		player = entity
-	player.global_transform.origin.y = 3
+		entity.global_transform.origin.y = 3
 
 
 func _load_scenes(_path: String, _arr: Array) -> void:
