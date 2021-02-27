@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://HUD/Scenes/DialogueProp.tscn" type="PackedScene" id=1]
+
+[node name="Ending" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="DialogueLabel" parent="." instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+valign = 1
+dialogue = [ "Hey!", "Thank you for playing my demo!", "Thank you Lyra, for making the art for our game. You are the most amazing person I've ever known.", "Thank you Ygg, for being my only S tier best friend. This game is made for you, after all.", "Regardless of who you are, thank you for playing!", "The next update will come on 2021. 03. 13.", "Stay tuned!" ]
+auto_start = true
+load_new_map = true

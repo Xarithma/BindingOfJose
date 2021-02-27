@@ -61,3 +61,8 @@ func _load_scenes(_path: String, _arr: Array) -> void:
 			if ".tscn" in _file:
 				_arr.append(load(_path + _file))
 	_dir.list_dir_end()
+
+func set_next_level():
+	game_dungeon_index += 1
+	if game_dungeon_index >= game_dungeon_amount:
+		game_map_to_load = "res://Ending.tscn"
