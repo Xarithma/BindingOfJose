@@ -33,9 +33,18 @@ func _ready() -> void:
 
 # Calls on every frame.
 func _process(_delta: float) -> void:
-	if get_tree().get_nodes_in_group("Blub").size() == 0:
+	# Check for blubs in the first phase.
+	if get_tree().get_nodes_in_group("Blub").size() == 0 and _phase == 1:
 		_phase += 1
-		set_process(false)
+	
+	# Get player origin.
+	var _player_orig = Globals.player.global_transform.origin
+	
+	# Stop the seziure.
+	if global_transform.origin.distance_to(_player_orig) < 2.1:
+		hide()
+	else:
+		show()
 
 
 # Calls on every tick of the game. (60/s)
@@ -112,6 +121,7 @@ func damage():
 		var _portal_instance = _portal.instance()
 		get_parent().add_child(_portal_instance)
 		_portal_instance.global_transform.origin = Vector3.ZERO
+		Globals.set_next_level()
 		queue_free()
 
 
