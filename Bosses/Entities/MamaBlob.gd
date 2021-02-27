@@ -55,9 +55,6 @@ func _physics_process(_delta: float) -> void:
 				# While "in-air" the boss cannot damage.
 				_can_damage = false
 
-				# This is because the boss pushes the player "in-air."
-				$CollisionShape.disabled = false
-
 				# Get the target position, while not jumping.
 				_target = _get_velocity()
 
@@ -67,9 +64,6 @@ func _physics_process(_delta: float) -> void:
 
 			# The boss deals damage.
 			_can_damage = true
-
-			# The collision turns back on.
-			$CollisionShape.disabled = true
 
 		2:
 			# Check if the boss is "tired."
@@ -114,6 +108,10 @@ func damage():
 	health -= Globals.player_attack_damage
 	$UI/HealthBar.value = health
 	if health <= 0:
+		var _portal = load("res://Bosses/BossWinPortal.tscn")
+		var _portal_instance = _portal.instance()
+		get_parent().add_child(_portal_instance)
+		_portal_instance.global_transform.origin = Vector3.ZERO
 		queue_free()
 
 
@@ -181,3 +179,8 @@ func _on_RushTimer_timeout() -> void:
 		$AnimatedSprite3D.animation = "tired"
 	elif _in_rush and _phase == 2:
 		$AnimatedSprite3D.animation = "default"
+
+
+func _on_Area_area_entered(area):
+	if area.is_in_group("PlayerDamage"):
+		damage()
