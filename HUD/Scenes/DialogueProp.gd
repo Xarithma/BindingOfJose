@@ -12,6 +12,17 @@ export var next_dialogue_cooldown: float = 2.5
 # Index value to which part of the dialogue should be played.
 var _dialogue_index: int = 0
 
+export var auto_start: bool = false
+
+export var load_new_map: bool = false
+
+export var scene_to_load: String = "res://Menus/MainMenu.tscn"
+
+
+func _ready():
+	if auto_start:
+		play_dialogue()
+
 
 func _input(event: InputEvent) -> void:
 	# Skip the dialogue.
@@ -22,9 +33,16 @@ func _input(event: InputEvent) -> void:
 # Plays the dialogue set by the index.
 func play_dialogue() -> void:
 	for i in range(dialogue.size()):
+		# Reset the text.
+		text = ""
+		
 		# Each letter from the current dialogue is added to the Label's `text.`
 		for letter in dialogue[i]:
 			yield(get_tree().create_timer(letter_speed), "timeout")
 			text += letter
 		yield(get_tree().create_timer(next_dialogue_cooldown), "timeout")
+
+	if load_new_map:
+		var _lvl_change := get_tree().change_scene(scene_to_load)
+
 	queue_free()
