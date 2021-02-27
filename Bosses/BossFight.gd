@@ -9,9 +9,9 @@ onready var _boss: Node = get_tree().get_nodes_in_group("Boss")[0]
 func _physics_process(_delta: float) -> void:
 	for boss in get_tree().get_nodes_in_group("Boss"):
 		# Update the boss's health.
-		$ProgressBar.value = boss.health
+		$UserInterface/ProgressBar.value = boss.health
 
 		return  # Don't let the code go further.
 
 	# The health bar can be deleted.
-	$ProgressBar.queue_free()
+	$UserInterface/ProgressBar.queue_free()
