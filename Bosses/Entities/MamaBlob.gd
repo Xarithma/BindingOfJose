@@ -4,13 +4,10 @@ extends KinematicBody
 const _DAMAGE: int = 18
 
 # Health of the boss.
-var health: float = 50
+var health: float = 25
 
 # Controls which boss-phase is processed.
 var _phase: int = 1
-
-# ? Checks if the boss is tired. I don't think this is used anywhere?
-var _stunned: bool = false
 
 # For 2nd phase, switches between rush/tired.
 var _in_rush: bool = false
@@ -43,11 +40,7 @@ func _process(_delta: float) -> void:
 
 # Calls on every tick of the game. (60/s)
 func _physics_process(_delta: float) -> void:
-	
-	# I mean, why should it run when she be stunned, right?
-	if _stunned:
-		return
-	
+
 	# Avoids bugs where the player is not present, but still calls.
 	if not Globals.player:
 		return
@@ -59,38 +52,36 @@ func _physics_process(_delta: float) -> void:
 	match _phase:
 		1:
 			if not $AnimationPlayer.is_playing():
-				
 				# While "in-air" the boss cannot damage.
 				_can_damage = false
-				
+
 				# This is because the boss pushes the player "in-air."
 				$CollisionShape.disabled = false
 
 				# Get the target position, while not jumping.
 				_target = _get_velocity()
-				
-				return # So the process doesn't go further.
-			
+
+				return  # So the process doesn't go further.
+
 			# When the boss hit the ground...
-			
+
 			# The boss deals damage.
 			_can_damage = true
-			
+
 			# The collision turns back on.
 			$CollisionShape.disabled = true
 
 		2:
 			# Check if the boss is "tired."
 			if not _in_rush:
-				
 				# Cannot damage while "tired."
 				_can_damage = false
-				
-				return # So the process doesn't go further.
-			
+
+				return  # So the process doesn't go further.
+
 			# Constantly get the velocity while in rush.
 			_target = _get_velocity()
-			
+
 			# Make sure that while the boss is rushing it can also damage.
 			_can_damage = true
 
@@ -100,10 +91,9 @@ func _physics_process(_delta: float) -> void:
 
 # Doesn't allow the boss to leave the scene.
 func _limit_boundaries() -> Vector3:
-	
 	# Temporary transform origin.
 	var _origin: Vector3 = global_transform.origin
-	
+
 	# Check if the boss is passing a "border." If so push them back.
 	if _origin.x > _MOVEMENT_BORDER:
 		_origin.x -= 1
@@ -113,7 +103,7 @@ func _limit_boundaries() -> Vector3:
 		_origin.z -= 1
 	elif _origin.z < -_MOVEMENT_BORDER:
 		_origin.z += 1
-	
+
 	# Return the new "pushed-back" origin.
 	return _origin
 
@@ -144,83 +134,43 @@ func _get_velocity(delta: float = 1) -> Vector3:
 	return _get_direction_to_player() * delta * _SPEED
 
 
-# Enables the collision? I should remove the stuns.
-func _reset_collision(_timer: int = 2):
-	$AnimatedSprite3D/Area/CollisionShape.disabled = true
-	$CollisionTimer.start(_timer)
-
-
 # This is a fricking mess.
 func _on_Area_body_entered(body: Node) -> void:
-	
-	# If the boss is already stunned, why bother?
-	if _stunned:
-		return
-
 	# If the boss can't damage, than why?
 	if not _can_damage:
 		return
-	
-	# ! I want to remove this so badly...
-	# Check if in the rush face the boss hit a wall.
-	if _phase == 2 and body.is_in_group("Wall"):
-		
-		# Stun the mama.
-		_stunned = true
-		
-		# Stun timer to get unstunned.
-		$StunTimer.start(5)
-		
-		# Enable the collision again?
-		_reset_collision(1)
 
 	# Further than this, why bother if the body is not the player?
 	if not body.is_in_group("Player"):
 		return
-	
+
 	# Deal damage to the player.
 	body.damage(_DAMAGE)
-	
+
 	# Slow the player down, 'cause y'know... blob?
 	body.slow_down()
-	
-	# ... ? Maybe I shouldn't drink 3 cans of monster before... I code?
-	_reset_collision()
-	
+
 	# Sets the "you've been damaged" indicator on the player.
 	body.add_child(Globals.hit_indicators[0].instance())
 
 
 # Jump if the timer runs out.
 func _on_JumpTimer_timeout() -> void:
-	
 	# This only applies to phase 1.
 	if _phase != 1:
 		return
-	
+
 	# The
 	$AnimationPlayer.play("Jumping")
 
 
 # If the animation is finished (jump) this calls.
 func _on_AnimationPlayer_animation_finished(_anim_name: String) -> void:
-	
 	# Stop the animation player (ofc)
 	$AnimationPlayer.stop()
-	
+
 	# Restart the jump timer.
 	$JumpTimer.start(1)
-
-
-# Check if the stun cooldown expired.
-func _on_StunTimer_timeout():
-	
-	# Turn off stuns.
-	_stunned = false
-
-
-func _on_CollisionTimer_timeout():
-	$AnimatedSprite3D/Area/CollisionShape.disabled = false
 
 
 func _on_RushTimer_timeout() -> void:
