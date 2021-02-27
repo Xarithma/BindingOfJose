@@ -53,13 +53,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0 )
 [node name="Camera" type="Camera" parent="Head"]
 fov = 90.0
 
-[node name="Debug" type="Label" parent="Head/Camera"]
-margin_left = 15.0
-margin_top = 14.0
-margin_right = 261.0
-margin_bottom = 56.0
+[node name="Health" type="Label" parent="Head/Camera"]
+margin_left = 185.86
+margin_top = 537.257
+margin_right = 431.86
+margin_bottom = 579.257
 custom_fonts/font = SubResource( 3 )
-text = "Health"
+text = "HP: 100"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -69,6 +69,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 alignment = 1
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 

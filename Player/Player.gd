@@ -60,7 +60,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(_delta: float) -> void:
-	$Head/Camera/Debug.set_text("Health: %d" % Globals.player_health)
+	$Head/Camera/Health.set_text("HP: %d" % Globals.player_health)
 	$Head/HitBox/CollisionShape.disabled = ! _in_punch
 
 
