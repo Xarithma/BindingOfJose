@@ -15,7 +15,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Binding of Herrington"
+config/name="Binding of Jose"
+config/description="A first-person dungeon crawler, made in Godot."
 run/main_scene="res://Menus/MainMenu.tscn"
 config/icon="res://icon.png"
 
