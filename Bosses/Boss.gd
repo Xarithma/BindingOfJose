@@ -9,9 +9,6 @@ var health: float = 25
 # Controls which boss-phase is processed.
 var _phase: int = 1
 
-# For 2nd phase, switches between rush/tired.
-var _in_rush: bool = false
-
 # Shows whether the boss can deal damage.
 var _can_damage: bool = true
 
@@ -54,9 +51,6 @@ func _physics_process(_delta: float) -> void:
 	if not Globals.player:
 		return
 
-	# I hate writing global_transform.origin. I just did it again.
-	global_transform.origin = _limit_boundaries()
-
 	# Handles which phase to process, there are better ways pls no buli.
 	match _phase:
 		1:
@@ -68,8 +62,6 @@ func _physics_process(_delta: float) -> void:
 				_target = _get_velocity()
 
 				return  # So the process doesn't go further.
-
-			# When the boss hit the ground...
 
 			# The boss deals damage.
 			_can_damage = true
@@ -90,25 +82,6 @@ func _physics_process(_delta: float) -> void:
 
 	# Movement call. I declare it so it not just "doesn't return anything."
 	var _move: Vector3 = move_and_slide(_target, Vector3.UP)
-
-
-# Doesn't allow the boss to leave the scene.
-func _limit_boundaries() -> Vector3:
-	# Temporary transform origin.
-	var _origin: Vector3 = global_transform.origin
-
-	# Check if the boss is passing a "border." If so push them back.
-	if _origin.x > _MOVEMENT_BORDER:
-		_origin.x -= 1
-	elif _origin.x < -_MOVEMENT_BORDER:
-		_origin.x += 1
-	if _origin.z > _MOVEMENT_BORDER:
-		_origin.z -= 1
-	elif _origin.z < -_MOVEMENT_BORDER:
-		_origin.z += 1
-
-	# Return the new "pushed-back" origin.
-	return _origin
 
 
 # ? Might be changed later.
@@ -144,7 +117,7 @@ func _get_velocity(delta: float = 1) -> Vector3:
 
 
 # This is a fricking mess.
-func _on_Area_body_entered(body: Node) -> void:
+func _damage_to_player(body: Node) -> void:
 	# If the boss can't damage, than why?
 	if not _can_damage:
 		return
@@ -163,34 +136,19 @@ func _on_Area_body_entered(body: Node) -> void:
 	body.add_child(Globals.hit_indicators[0].instance())
 
 
-# Jump if the timer runs out.
-func _on_JumpTimer_timeout() -> void:
-	# This only applies to phase 1.
-	if _phase != 1:
-		return
+func _boss_attack_action() -> void:
+	match _phase:
+		1:
+			$AnimatedSprite3D.animation = "Jumping"
+		2:
+			_in_rush = not _in_rush
 
-	# The
-	$AnimationPlayer.play("Jumping")
-
-
-# If the animation is finished (jump) this calls.
-func _on_AnimationPlayer_animation_finished(_anim_name: String) -> void:
-	# Stop the animation player (ofc)
-	$AnimationPlayer.stop()
-
-	# Restart the jump timer.
-	$JumpTimer.start(1)
+			if not _in_rush and _phase == 2:
+				$AnimatedSprite3D.animation = "tired"
+			elif _in_rush and _phase == 2:
+				$AnimatedSprite3D.animation = "default"
 
 
-func _on_RushTimer_timeout() -> void:
-	_in_rush = not _in_rush
-
-	if not _in_rush and _phase == 2:
-		$AnimatedSprite3D.animation = "tired"
-	elif _in_rush and _phase == 2:
-		$AnimatedSprite3D.animation = "default"
-
-
-func _on_Area_area_entered(area):
+func _player_boss_attack(area):
 	if area.is_in_group("PlayerDamage"):
 		damage()

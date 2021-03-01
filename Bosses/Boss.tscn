@@ -73,7 +73,6 @@ disabled = true
 transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 7.5, 0 )
 billboard = 1
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
 [node name="Area" type="Area" parent="AnimatedSprite3D"]
@@ -83,16 +82,8 @@ transform = Transform( 0.142857, 0, 0, 0, 0.142857, 0, 0, 0, 0.142857, 0, -1.071
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 shape = SubResource( 3 )
 
-[node name="CollisionTimer" type="Timer" parent="."]
-
-[node name="JumpTimer" type="Timer" parent="."]
+[node name="ActionTimer" type="Timer" parent="."]
 wait_time = 0.5
-
-[node name="StunTimer" type="Timer" parent="."]
-
-[node name="RushTimer" type="Timer" parent="."]
-wait_time = 3.0
-autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Jumping = SubResource( 4 )
@@ -121,10 +112,3 @@ text = "Boss Health:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="area_entered" from="AnimatedSprite3D/Area" to="." method="_on_Area_area_entered"]
-[connection signal="body_entered" from="AnimatedSprite3D/Area" to="." method="_on_Area_body_entered"]
-[connection signal="timeout" from="CollisionTimer" to="." method="_on_CollisionTimer_timeout"]
-[connection signal="timeout" from="JumpTimer" to="." method="_on_JumpTimer_timeout"]
-[connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
-[connection signal="timeout" from="RushTimer" to="." method="_on_RushTimer_timeout"]
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
